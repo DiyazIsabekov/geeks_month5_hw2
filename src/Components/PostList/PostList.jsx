@@ -13,15 +13,30 @@ const PostList = () => {
             })
     }, [])
 
+    const handleDelete = (id) => {
+        axios
+            .delete(`https://dummyjson.com/posts/${id}`)
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error("Ошибка", error);
+            })
+    }
+
+
     console.log(posts);
     return (
         <div>
             <ul>
                 {posts ? (
-                    posts.map((post) => <li key={post.id}>{post.title}</li>)
+                    posts.map((post) =>
+                        <li key={post.id}>{post.title} <button onClick={() => handleDelete(post.id)}>Удалить</button></li>
+                    )
                 ) : (
                     <p>loading...</p>
                 )}
+
             </ul>
         </div>
     );
